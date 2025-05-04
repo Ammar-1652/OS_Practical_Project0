@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CPU Scheduling Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="{{ algorithm }}">
+    <div class="container">
+        <h1>CPU Scheduling Simulator</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="alerts">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="post">
+            <div class="controls">
+                <div class="algorithm-selector">
+                    <div class="algorithm-options">
+                        <input type="radio" name="algorithm" value="fcfs" id="fcfs" 
+                            {{ 'checked' if algorithm == 'fcfs' }}>
+                        <label for="fcfs" class="algo-btn">FCFS</label>
+                        
+                        <input type="radio" name="algorithm" value="rr" id="rr"
+                            {{ 'checked' if algorithm == 'rr' }}>
+                        <label for="rr" class="algo-btn">Round Robin</label>
+                        
+                        <div class="quantum-field" id="quantumField" 
+                            style="{{ 'display: block;' if algorithm == 'rr' else 'display: none;' }}">
+                            <label>Quantum:</label>
+                            <input type="number" name="quantum" value="{{ quantum }}" 
+                                min="1" {% if algorithm == 'rr' %}required{% endif %}>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="process-management">
+                    <div class="add-process">
+                        <h3>Add Process</h3>
+                        <div class="input-group">
+                            <input type="number" name="arrival" placeholder="Arrival" min="0">
+                            <input type="number" name="burst" placeholder="Burst" min="1">
+                            <button type="submit" name="add_process" class="btn add-btn">+ Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="process-table">
+                <h2>Process Table</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Process</th>
+                            <th>Arrival</th>
+                            <th>Burst</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in processes %}
+                        <tr>
+                            <td>{{ p.pid }}</td>
+                            <td>{{ p.arrival }}</td>
+                            <td>{{ p.burst }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="action-buttons">
+                <button type="submit" name="run_algorithm" class="btn run-btn">Run Scheduling</button>
+                <button type="submit" formaction="/reset" class="btn reset-btn">Reset to Default</button>
+            </div>
+        </form>
+
+        {% if gantt %}
+        <div class="results">
+            <div class="metrics">
+                <div class="metric-card">
+                    <span class="metric-label">Avg Waiting Time</span>
+                    <span class="metric-value">{{ avg_wait }}</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Avg Turnaround Time</span>
+                    <span class="metric-value">{{ avg_turn }}</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Total Time</span>
+                    <span class="metric-value">{{ total_time }}</span>
+                </div>
+            </div>
+
+            <div class="gantt-container">
+                <h3>Gantt Chart</h3>
+                <div class="gantt-chart">
+                    {% for seg in gantt %}
+                    <div class="gantt-segment"
+                        style="width: calc(({{ seg.end }} - {{ seg.start }}) / {{ total_time }} * 100%);
+                               left: calc({{ seg.start }} / {{ total_time }} * 100%);">
+                        <div class="segment-pid">{{ seg.pid }}</div>
+                        <div class="segment-time">{{ seg.start }}-{{ seg.end }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="timeline">
+                    {% for time in time_points %}
+                    <div class="timeline-mark" 
+                        style="left: calc({{ time }} / {{ total_time }} * 100%);">
+                        {{ time }}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
