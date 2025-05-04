@@ -1,0 +1,228 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --danger-color: #e74c3c;
+    --background-color: #ecf0f1;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    margin: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.alerts {
+    margin-bottom: 25px;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+    color: #0c5460;
+}
+
+.algorithm-selector {
+    margin-bottom: 25px;
+}
+
+.algorithm-options {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.algo-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    transition: all 0.2s ease;
+}
+
+input[type="radio"]:checked + .algo-btn {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.quantum-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.process-management {
+    margin: 25px 0;
+}
+
+.input-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+}
+
+input[type="number"] {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[type="number"].error {
+    border-color: var(--danger-color);
+}
+
+.process-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+th {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.run-btn {
+    background-color: var(--success-color);
+    color: white;
+}
+
+.reset-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.add-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.gantt-container {
+    margin-top: 35px;
+}
+
+.gantt-chart {
+    position: relative;
+    height: 60px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.gantt-segment {
+    position: absolute;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding: 5px;
+    border-right: 2px solid white;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+body.fcfs .gantt-segment { background-color: var(--secondary-color); }
+body.rr .gantt-segment { background-color: var(--warning-color); }
+
+.timeline {
+    position: relative;
+    height: 40px;
+    margin-top: 15px;
+}
+
+.timeline-mark {
+    position: absolute;
+    transform: translateX(-50%);
+    font-size: 0.9em;
+    color: #666;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.metric-card {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.metric-label {
+    display: block;
+    color: #666;
+    font-size: 0.95em;
+    margin-bottom: 8px;
+}
+
+.metric-value {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--success-color);
+}
